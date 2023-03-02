@@ -1,0 +1,29 @@
+--Create an electronics store database
+
+CREATE TABLE Electronics (id INTEGER PRIMARY KEY, name TEXT, department TEXT, price INTEGER, color TEXT, display TEXT);
+
+INSERT INTO Electronics VALUES (1, "PS5", "Video Games", 500, "White", "Yes");
+INSERT INTO Electronics VALUES (2, "Xbox", "Video Games", 450, "Black", "Yes");
+INSERT INTO Electronics VALUES (3, "Nintendo Switch", "Video Games", 350, "Black", "No");
+INSERT INTO Electronics VALUES (4, "Bluetooth Speaker", "Audio", 200, "Blue", "Yes");
+INSERT INTO Electronics VALUES (5, "Bluetooth Speaker", "Audio", 200, "White", "No");
+INSERT INTO Electronics VALUES (6, "Bluetooth Speaker", "Audio", 200, "Red", "No");
+INSERT INTO Electronics VALUES (7, "OLED TV", "Televisions", 2000, "Black", "Yes");
+INSERT INTO Electronics VALUES (8, "OLED TV", "Televisions", 3000, "Black", "Yes");
+INSERT INTO Electronics VALUES (9, "LED TV", "Televisions", 499, "Black", "Yes");
+INSERT INTO Electronics VALUES (10, "LED TV", "Televisions", 599, "Black", "No");
+INSERT INTO Electronics VALUES (11, "iPad", "Computers", 499, "Black", "Yes");
+INSERT INTO Electronics VALUES (12, "iPad Mini", "Computers", 299, "Black", "Yes");
+INSERT INTO Electronics VALUES (13, "iPhone 13", "Phones", 899, "Black", "Yes");
+INSERT INTO Electronics VALUES (14, "iPhone 13 Max", "Phones", 999, "Black", "Yes");
+INSERT INTO Electronics VALUES (15, "iPhone 13 Max", "Phones", 999, "Green", "No");
+
+--Display the database ordered by price.
+SELECT * FROM Electronics
+ORDER BY price desc;
+
+--What is the total value of the inventory grouped by department?
+SELECT department, SUM(price) FROM Electronics GROUP BY department;
+
+--List all items across departments that are valued at or above $800
+SELECT * FROM electronics WHERE price >= 800 ORDER BY price;
