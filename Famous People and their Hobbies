@@ -1,0 +1,59 @@
+/* Create table about famous people and their hobbies */
+
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, occupation TEXT, hobby TEXT);
+
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Jack Black", "56", "actor", "singing");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Dwyane Johnson", "51", "actor", "lifting weights");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Eva Mendez", "48", "actor", "sky diving");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Will Ferrell", "53", "actor", "woodworking");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Zendaya", "25", "actor", "karate"); 
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Denzel Washington", "57", "actor", "yoga");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Anne Hathaway", "40", "actor", "tap dancing");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Justin Timberlake", "41", "singer", "karate");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Lizzo", "29", "singer", "painting");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Gordon Ramsay", "52", "chef", "sky diving");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Serena Williams", "41", "athlete", "singing");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("LeBron James", "38", "athlete", "woodworking");
+INSERT INTO famous_people (name, age, occupation, hobby) VALUES ("Simone Biles", "26", "athlete", "yoga");
+
+CREATE TABLE hobbies (id INTEGER PRIMARY KEY, hobby TEXT, cost_per_month INTEGER, start_up_cost INTEGER);
+
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("singing", "0", "0");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("lifting weights", "20", "125");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("sky diving", "175", "0");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("woodworking", "55", "5000");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("karate", "30", "50");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("yoga", "40", "60");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("tap dancing", "35", "25");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("painting", "20", "230");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("ceramics", "70", "2350");
+INSERT INTO hobbies (hobby, cost_per_month, start_up_cost) VALUES ("reading", "20", "0");
+
+CREATE TABLE state_hobby (id INTEGER PRIMARY KEY, state TEXT, hobby TEXT, participation_per_capita INTEGER);
+
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("AL", "swimming", "16500");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("AK", "hunting", "12531");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("AZ", "hiking", "30000");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("NY", "lifting weights", "24681");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("CA", "yoga", "34912");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("IL", "woodworking", "15731");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("MT", "sky diving", "28954");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("TN", "woodworking", "14531");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("VA", "singing", "19661");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("WA", "karate", "23567");
+INSERT INTO state_hobby (state, hobby, participation_per_capita) VALUES ("KS", "tap dancing", "11361");
+
+/* Which famous people have hobbies that cost less than $50 per month to do? */
+
+SELECT famous_people.name, hobbies.hobby, hobbies.cost_per_month FROM famous_people
+LEFT JOIN hobbies ON famous_people.hobby = hobbies.hobby WHERE cost_per_month<50
+ORDER BY cost_per_month;
+
+
+/* Based on the popularity of the hobby in each state, where might you find a specific famous person based on their favorite hobby? */
+
+SELECT famous_people.name, state_hobby.state, state_hobby.hobby FROM famous_people 
+JOIN state_hobby ON famous_people.hobby = state_hobby.hobby
+WHERE state_hobby.participation_per_capita = (
+  SELECT MAX(participation_per_capita) FROM state_hobby WHERE hobby = famous_people.hobby
+);
